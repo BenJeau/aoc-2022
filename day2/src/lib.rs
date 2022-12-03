@@ -23,6 +23,21 @@ pub fn solve_part_1(file_content: String) -> usize {
         .sum::<usize>()
 }
 
+pub fn solve_part_2(file_content: String) -> usize {
+    file_content
+        .split("\n")
+        .map(|value| {
+            value
+                .split(" ")
+                .map(Object::convert_char)
+                .flatten()
+                .collect::<Round>()
+                .part_2_pre_process()
+                .total_score()
+        })
+        .sum::<usize>()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -35,5 +50,11 @@ C Z"#;
     fn test_solve_part_1() {
         let result = solve_part_1(SAMPLE_DATA.to_string());
         assert_eq!(result, 15);
+    }
+
+    #[test]
+    fn test_solve_part_2() {
+        let result = solve_part_2(SAMPLE_DATA.to_string());
+        assert_eq!(result, 12);
     }
 }

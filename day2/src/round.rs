@@ -18,6 +18,27 @@ impl Round {
     pub fn total_score(&self) -> usize {
         self.player2.value() + self.value()
     }
+
+    pub fn part_2_pre_process(mut self) -> Self {
+        self.player2 = match self.player2 {
+            // Need to lose
+            Object::Rock => match self.player1 {
+                Object::Rock => Object::Scissor,
+                Object::Paper => Object::Rock,
+                Object::Scissor => Object::Paper,
+            },
+            // Need to draw
+            Object::Paper => self.player1,
+            // Need to win
+            Object::Scissor => match self.player1 {
+                Object::Rock => Object::Paper,
+                Object::Paper => Object::Scissor,
+                Object::Scissor => Object::Rock,
+            },
+        };
+
+        self
+    }
 }
 
 impl FromIterator<Object> for Round {
