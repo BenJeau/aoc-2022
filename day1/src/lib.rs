@@ -1,3 +1,8 @@
+pub fn read_file_vec(filename: &str) -> Result<String, Box<dyn std::error::Error>> {
+    let path: std::path::PathBuf = [env!("CARGO_MANIFEST_DIR"), filename].into_iter().collect();
+    Ok(std::fs::read_to_string(path)?)
+}
+
 fn get_calories(file_content: String) -> Vec<usize> {
     let mut calories: Vec<usize> = file_content
         .split("\n\n")
@@ -6,7 +11,7 @@ fn get_calories(file_content: String) -> Vec<usize> {
             chunk
                 .split("\n")
                 .into_iter()
-                .map(|value| value.parse::<usize>().unwrap())
+                .map(|value| value.parse::<usize>().unwrap_or_default())
                 .sum()
         })
         .collect();

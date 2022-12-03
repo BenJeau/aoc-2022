@@ -1,5 +1,4 @@
-use day1::solve_part_1;
-use utils::read_file_vec;
+use day1::{read_file_vec, solve_part_1};
 
 fn main() {
     let file_content = read_file_vec("input").unwrap();
